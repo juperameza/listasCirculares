@@ -9,11 +9,8 @@
 <body> <h1>Welcome to route control</h1>
     <div id='app'>
       <form>
-        <label for='txtCodigo'>Base:
+        <label for='txtBase'>Base:
           <input type='text' id='txtBase'>
-        </label><br>
-        <label for='txtHora'>Hora:
-          <input type='number' id='txtHora'>
         </label><br>
         <label for='txtMinutos'>Minutos:
           <input type='number' id='txtMinutos'>
@@ -22,12 +19,29 @@
         <button type='button' id='btnSearch'>Buscar</button>
         <button type='button' id='btnDelete'>Eliminar</button>
         <button type='button' id='btnList'>Listar</button>
-        <button type='button' id='btnInvList'>Listar al reves</button>
-      <!--<button type='button' id='ranDom'>Agregar random pruebas</button> --> 
+        <!-- <button type='button' id='btnInvList'>Listar al reves</button> -->
+     <button type='button' id='ranDom'>Agregar random pruebas</button> 
         <button type='reset'>Cancelar</button>
       </form>
     </div>
     <div id='resultado'>
+    </div>
+      <br>
+      <form>
+        <label for='tarjetaBase'>Base:
+          <input type='text' id='tarjetaBase'>
+        </label><br>
+        <label for='tarjetaHora'>Hora de inicio:
+          <input type='number' id='tarjetaHora'>
+        </label><br>
+        <label for='tarjetaMinutos'>Minutos a trabajar:
+          <input type='number' id='tarjetaMinutos'>
+        </label><br>
+        <button type='button' id='btnTarjeta'>Crear tarjeta</button>
+        <button type='reset'>Cancelar</button>
+      </form>
+    </div>
+    <div id='resultadoTarjeta'>
     </div>
       
     <script src="main.js" type="module"></script>

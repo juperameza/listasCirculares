@@ -3,73 +3,58 @@ export default class Inventario {
     this.inicio = null;
     
   }
-  buscar(codigo){
+  buscar(base){
     let temp=this.inicio;
-    while(temp!=null){
-      if(temp.codigo>codigo){
-        console.log("Vesion")
-         return null
-      }
-      else if(temp.codigo==codigo)
+    do{
+      if(temp.base==base){
         return temp;
+      }
       temp=temp.siguiente;
-    }
-
-  }
-  
-  agregar(nuevo) {
-    if(this.buscar(nuevo.codigo)==null){
-      if (this.inicio == null) {
-         this.inicio = nuevo;
-         return nuevo
-      }
-    else if(nuevo.codigo<this.inicio.codigo) {
-      nuevo.siguiente=this.inicio
-      this.inicio.anterior=nuevo
-      this.inicio=nuevo 
-       return nuevo
-     }
-
-     else{
-      let temp=this.inicio
-      while(temp.siguiente!=null){
-        temp=temp.siguiente;
-        if(temp.codigo>nuevo.codigo){
-          nuevo.siguiente=temp
-          nuevo.anterior=temp.anterior
-          temp.anterior=nuevo
-          nuevo.anterior.siguiente=nuevo
-          return nuevo;
-        }
-      }
-      if(temp.codigo<nuevo.codigo){
-        temp.siguiente=nuevo
-        nuevo.anterior=temp
-        return nuevo 
-      }
-       
-     }
-    }
-    else{
+    }while(temp!=this.inicio);
     return null;
   }
-  } 
+  
+  agregar(nuevo){
+    
+   
+    if (this.inicio==null){
+    this.inicio=nuevo;
+    nuevo.siguiente=this.inicio;
+    nuevo.anterior=this.inicio;
+    return nuevo;
+    
+  }
+   
+  else {
+    if(this.buscar(nuevo.base)==null){
+    let ultimo=this.inicio.anterior;
+    nuevo.siguiente=this.inicio;
+    nuevo.anterior=ultimo;
+    this.inicio.anterior.siguiente
+    ultimo.siguiente=nuevo;
+    this.inicio.anterior=nuevo;
+   return nuevo;
+  }
+  return null
+}
+
+}
 
  
 
-  eliminar(codigo){
+  eliminar(base){
     let temp =null;
-    if (codigo==this.inicio.codigo){
+    if (base==this.inicio.base){
       temp=this.inicio;                                  
-       this.inicio=this.inicio.siguiente
-      this.inicio.anterior=null;
-      temp.anterior=null
-      temp.siguiente=null
+       temp.anterior.siguiente=temp.siguiente;
+        temp.siguiente.anterior=temp.anterior;
+        this.inicio=temp.siguiente;
+        temp.siguiente=null;
+        temp.anterior=null;
       return temp;
     }
-    temp=this.buscar(codigo);
-  
-    temp.anterior.siguiente=temp.siguiente              
+    temp=this.buscar(base);
+  temp.anterior.siguiente=temp.siguiente              
 temp.siguiente.anterior=temp.anterior                   
 temp.anterior=null
 temp.siguiente=null
@@ -78,17 +63,17 @@ temp.siguiente=null
   }
   
   list(){
-    if (!this.inicio)
-      return '';
-    else
-      return this._listarRec(this.inicio);
+    let res='';
+  if (this.inicio!=null){
+    let temp=this.inicio;
+    do{
+      res += temp.infoHtml() ;
+      temp=temp.siguiente;
+    }while(temp!=this.inicio);
   }
-  _listarRec(n){
-    if (n.siguiente==null)
-      return n.infoHtml();
-    else
-      return n.infoHtml() + '\n' + this._listarRec(n.siguiente);
-  }        
+  return res;
+}
+       
   inverseList(){
     if (!this.inicio)
       return '';
@@ -104,15 +89,36 @@ temp.siguiente=null
   
   
 
-  contar(){
-    let resultado=0;
-          if (!this.inicio)
-            return 0;
-          let temp=this.inicio;
-          while(temp!=null){
-           resultado++
-            temp=temp.siguiente;
-          }
-          return resultado;
+  
+crearTarjeta(base,horas, minutos){
+  let temp = this.buscar(base);
+let resultado=`<div>
+Empezamos en la base ${temp.base} a las ${horas}:00 y trabajaremos ${minutos} minutos
+</div>`;
+let min=0;
+  for (let i = minutos; i >0; i-=temp.siguiente.minutos) {
+  
+    min+=temp.siguiente.minutos
+    if(min>=60){
+      min-=60;
+      horas++
+    }
+   else if(min==60){
+    min-=60;
+    horas++
+  }
+ 
+  resultado+=`<div>
+      Llego a la base ${temp.siguiente.base} a las ${horas}:${min<10?"0"+min:min}
+  </div>`;
+  temp=temp.siguiente;
+  console.log(i)
+  if(i-temp.siguiente.minutos<0){
+   resultado+= `<div>
+      Se quedo a ${temp.siguiente.minutos-i} minutos de la base ${temp.siguiente.base}
+  </div>`
+  }
+  }
+return resultado;
 }
 }
