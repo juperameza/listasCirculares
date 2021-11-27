@@ -75,18 +75,17 @@ temp.siguiente=null
 }
        
   inverseList(){
-    if (!this.inicio)
-      return '';
-    else
-      return this._listarRecInverso(this.inicio);
+    let res='';
+    if (this.inicio!=null){
+      let temp=this.inicio.anterior;
+      do{
+        res += temp.infoHtml() ;
+        temp=temp.anterior;
+      }while(temp!=this.inicio.anterior);
+    }
+    return res;
   }
-  _listarRecInverso(n){
-    if (n.siguiente==null)
-      return n.infoHtml();
-    else
-      return   this._listarRecInverso(n.siguiente) + n.infoHtml() ;
-  }  
-  
+
   
 
   
@@ -140,9 +139,6 @@ if(minuto>= temp.siguiente.minutos){
   }
   }
 
-
-
-  
   }
 }
 return resultado;

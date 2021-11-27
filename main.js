@@ -7,12 +7,12 @@ import Base from "./parada.js";
       const  btnBuscar=document.getElementById("btnSearch");
         const  btnEliminar=document.getElementById("btnDelete");
         const  btnListar=document.getElementById("btnList");
-        // const  btnListarReves=document.getElementById("btnInvList");
+        const  btnListarReves=document.getElementById("btnInvList");
        const btmRandom=document.getElementById("ranDom")
        const btnTarjeta=document.getElementById("btnTarjeta")
        btnTarjeta.addEventListener("click",this.readTarjeta);
         btnEliminar.addEventListener("click",  this._deleteProduct)
-        // btnListarReves.addEventListener("click",  this._inverseListProducts)
+        btnListarReves.addEventListener("click",  this._inverseListProducts)
         btnListar.addEventListener("click",  this._listProducts)
       btnBuscar.addEventListener("click",  this._searchProduct)
       btnRegister.addEventListener("click", this._addProduct)   
