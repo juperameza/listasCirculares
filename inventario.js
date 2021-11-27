@@ -90,15 +90,18 @@ temp.siguiente=null
   
 
   
-crearTarjeta(base,horas, minutos){
+crearTarjeta(base,horas, minuto){
   let temp = this.buscar(base);
 let resultado=`<div>
-Empezamos en la base ${temp.base} a las ${horas}:00 y trabajaremos ${minutos} minutos
+Empezamos en la base ${temp.base} a las ${horas}:00 y trabajaremos ${minuto>1?minuto+ " minutos": minuto+" minuto"}
 </div>`;
+let rawMin=0;
 let min=0;
-  for (let i = minutos; i >0; i-=temp.siguiente.minutos) {
-  
-    min+=temp.siguiente.minutos
+if(minuto>= temp.siguiente.minutos){
+  for (let i =temp.siguiente.minutos; i <=minuto; i+=temp.siguiente.minutos) {
+    rawMin+=temp.siguiente.minutos;
+    min+=temp.siguiente.minutos;
+    
     if(min>=60){
       min-=60;
       horas++
@@ -107,18 +110,41 @@ let min=0;
     min-=60;
     horas++
   }
- 
+ if(horas>12){
+  horas=1;
+ }
   resultado+=`<div>
       Llego a la base ${temp.siguiente.base} a las ${horas}:${min<10?"0"+min:min}
   </div>`;
   temp=temp.siguiente;
-  console.log(i)
-  if(i-temp.siguiente.minutos<0){
-   resultado+= `<div>
-      Se quedo a ${temp.siguiente.minutos-i} minutos de la base ${temp.siguiente.base}
+  if(minuto-rawMin<temp.siguiente.minutos&&minuto-rawMin!=0){
+      let hr=0;
+      let minaux=temp.siguiente.minutos-(minuto-rawMin);
+      if(minaux>=60){
+        minaux-=60;
+        hr++
+      }
+     else if(minaux==60){
+      minaux-=60;
+      hr++
+    }
+    if(hr==0){
+     resultado+= `<div>
+        Se quedo a ${minaux>1?minaux+ " minutos": minaux+" minuto"} de la base ${temp.siguiente.base}
+    </div>`
+  }
+  else{
+  resultado+= `<div>
+  Se quedo a ${hr>1?hr+" horas":hr+" hora"} y ${minaux>1?minaux+ " minutos": minaux+" minuto"}  de la base ${temp.siguiente.base}
   </div>`
   }
   }
+
+
+
+  
+  }
+}
 return resultado;
 }
 }

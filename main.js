@@ -40,6 +40,10 @@ import Base from "./parada.js";
       let base=inpBase.value;
       let minutos=Number(inpMinutos.value);
       let horas = Number(inpHoras.value);
+      if(horas<0 || horas>12){
+        div.innerHTML="Favor ingresar la hora en formato de 12 horas";
+        return;
+      }
       if(base&&minutos&&horas){
           inpBase.value="";
           inpMinutos.value="";
