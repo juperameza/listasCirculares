@@ -86,7 +86,7 @@ temp.siguiente=null
     return res;
   }
 
-  
+
 
   
 crearTarjeta(base,horas, minuto){

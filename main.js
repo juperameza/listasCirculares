@@ -60,11 +60,7 @@ import Base from "./parada.js";
         document.getElementById("resultado").innerHTML="Error todos los campos son requeridos";
         return;
       }
-      if(this._inventory.contar()>=20){
-        document.getElementById("resultado").innerHTML="Error maximo 20 Bases";
-        return
-      }
-      
+   
       let added=this._inventory.agregar(base);
       if(added==null){
         document.getElementById("resultado").innerHTML="Error Base ya registrado";
